@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import br.com.fiap.aeon.screens.LoginScreen
+import br.com.fiap.aeon.screens.`LoginScreen.kt`
 import br.com.fiap.aeon.screens.MenuScreen
 import br.com.fiap.aeon.ui.theme.AEONTheme
 
@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable("login") {
                             // Aqui você passa o motor para a tela de Login
-                            LoginScreen(modifier = Modifier.padding(innerPadding), navController)
+                            `LoginScreen.kt`(modifier = Modifier.padding(innerPadding), navController)
                         }
                         composable("menu") {
                             // Aqui você passa o motor para a tela de Menu (Feed)
