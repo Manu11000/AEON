@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "br.com.fiap.aeon"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "br.com.fiap.aeon"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
