@@ -1,5 +1,6 @@
 package br.com.fiap.aeon
 
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,6 +15,12 @@ import androidx.navigation.compose.rememberNavController
 import br.com.fiap.aeon.screens.LoginScreen
 import br.com.fiap.aeon.screens.MapsScreen
 import br.com.fiap.aeon.screens.MenuScreen
+import com.aeon.app.screens.FavoritosScreen
+import com.aeon.app.screens.PerfilScreen
+import com.aeon.app.screens.PostDetailScreen
+import com.aeon.app.screens.ReviewScreen
+import com.aeon.app.screens.SplashScreen
+import br.com.fiap.aeon.ui.components.AeonBottomBar
 import br.com.fiap.aeon.ui.theme.AEON2Theme
 
 class MainActivity : ComponentActivity() {
@@ -22,24 +29,49 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AEON2Theme {
-                // O navController deve ser declarado AQUI, fora do Scaffold
                 val navController = rememberNavController()
 
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+
+                Scaffold(modifier = Modifier.fillMaxSize(),
+                    bottomBar = {
+
+                        AeonBottomBar(navController = navController)
+                    }
+
+                ) { innerPadding ->
+
                     NavHost(
                         navController = navController,
-                        startDestination = "login",
-                        modifier = Modifier.padding(innerPadding) // Aplica o padding aqui
+                        startDestination = "splash",
+                        modifier = Modifier.padding(innerPadding)
                     ) {
-                        composable("login") {
-                            LoginScreen(navController = navController)
+                        composable("splash") {
+                            SplashScreen(navController)
                         }
+                        composable("login") {
+                            LoginScreen(navController)
+                        }
+//                        composable("cadastro") {
+//                            CadastroScreen(navController)
+//                        }
                         composable("menu") {
-                            MenuScreen(navController = navController)
+                            // Aqui você passa o motor para a tela de Menu (Feed)
+                            MenuScreen(navController)
                         }
                         composable("map") {
-                            MapsScreen(navController = navController)
+                            MapsScreen(navController)
                         }
+                        composable("post_detail") {
+                            PostDetailScreen(navController = navController)
+                        }
+                        composable("review") {
+                            ReviewScreen(navController) }
+
+                        composable("perfil") {
+                            PerfilScreen(navController)
+                        }
+                        composable("favoritos") {
+                            FavoritosScreen(navController) }
                     }
                 }
             }
