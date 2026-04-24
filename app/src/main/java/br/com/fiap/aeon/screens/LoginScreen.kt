@@ -1,5 +1,6 @@
 package br.com.fiap.aeon.screens
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -22,18 +23,22 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
+
 @Composable
-fun LoginScreen(modifier: Modifier = Modifier, navController: NavController) {
+fun LoginScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var senha by remember { mutableStateOf("") }
+    val context = LocalContext.current
+    val sharedPref = context.getSharedPreferences("AeonPrefs", Context.MODE_PRIVATE)
 
     Box(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
             .padding(32.dp)
@@ -78,8 +83,11 @@ fun LoginScreen(modifier: Modifier = Modifier, navController: NavController) {
                     if (email.isNotEmpty()) {
                         navController.navigate("menu")
                     }
+                    sharedPref.edit().putString("usuario_nome", email).apply()
+
+                    navController.navigate("menu")
                 },
-                colors = ButtonDefaults.buttonColors(Color(0xFF750D8F)), // Seu PurpleAeon
+                colors = ButtonDefaults.buttonColors(Color(0xFF750D8F)),
                 modifier = Modifier.size(width = 200.dp, height = 48.dp)
             ) {
                 Text(
