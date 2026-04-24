@@ -22,23 +22,20 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             AEON2Theme {
+                // O navController deve ser declarado AQUI, fora do Scaffold
                 val navController = rememberNavController()
 
-                // O Scaffold dá o espaço para o conteúdo não bater na barra do sistema
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    val navController = rememberNavController()
-
                     NavHost(
                         navController = navController,
-                        startDestination = "login"
+                        startDestination = "login",
+                        modifier = Modifier.padding(innerPadding) // Aplica o padding aqui
                     ) {
                         composable("login") {
-                            // Aqui você passa o motor para a tela de Login
-                            LoginScreen(modifier = Modifier.padding(innerPadding), navController)
+                            LoginScreen(navController = navController)
                         }
                         composable("menu") {
-                            // Aqui você passa o motor para a tela de Menu (Feed)
-                            MenuScreen(modifier = Modifier.padding(innerPadding), navController)
+                            MenuScreen(navController = navController)
                         }
                         composable("map") {
                             MapsScreen(navController = navController)
