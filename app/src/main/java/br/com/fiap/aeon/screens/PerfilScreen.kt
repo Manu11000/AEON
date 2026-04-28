@@ -19,9 +19,14 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.*
 import androidx.navigation.NavController
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.background
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 
 
 @Composable
+
 fun PerfilScreen(navController: NavController) {
     val scrollState = rememberScrollState()
 
@@ -31,6 +36,8 @@ fun PerfilScreen(navController: NavController) {
             .background(Color(0xFFF0FFF5))
             .verticalScroll(scrollState)
     ) {
+
+        // HEADER PERFIL
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -52,6 +59,7 @@ fun PerfilScreen(navController: NavController) {
                         .padding(top = 60.dp, start = 20.dp, end = 20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
@@ -62,9 +70,9 @@ fun PerfilScreen(navController: NavController) {
                             Text("@blairwillows", fontSize = 14.sp, color = Color.Gray)
                         }
                         Row {
-                            Icon(Icons.Default.Analytics, contentDescription = "Estatísticas", tint = Color.Black)
+                            Icon(Icons.Default.Analytics, contentDescription = null)
                             Spacer(modifier = Modifier.width(16.dp))
-                            Icon(Icons.Default.Settings, contentDescription = "Configurações", tint = Color.Black)
+                            Icon(Icons.Default.Settings, contentDescription = null)
                         }
                     }
 
@@ -88,13 +96,15 @@ fun PerfilScreen(navController: NavController) {
                     .size(100.dp)
                     .clip(CircleShape)
                     .border(4.dp, Color.White, CircleShape)
-                    .background(Color.Gray) // Placeholder Barbie
+                    .background(Color.Gray)
             )
         }
 
+        // DESTAQUES
         Column(modifier = Modifier.padding(20.dp)) {
             Text("Destaques", fontSize = 20.sp, fontWeight = FontWeight.Bold)
             Spacer(modifier = Modifier.height(12.dp))
+
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 HighlightCircle(Icons.Default.Business)
                 HighlightCircle(Icons.Default.TheaterComedy)
@@ -103,6 +113,7 @@ fun PerfilScreen(navController: NavController) {
             }
         }
 
+        // REVIEWS
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -112,8 +123,17 @@ fun PerfilScreen(navController: NavController) {
             colors = CardDefaults.cardColors(containerColor = Color.LightGray.copy(alpha = 0.3f))
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                ReviewExpandableCard("Terraço Jardins", "Restaurante", "R$200-250", "5")
-                ReviewExpandableCard("Bar Tan Tan", "Bares", "R$50-55", "4")
+
+                Text(
+                    "Locais visitados recentemente",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                ReviewExpandableCard("Terraço Jardins", "Restaurante", "R$200-250", "5.0")
+                ReviewExpandableCard("Bar Tan Tan", "Bares", "R$50-55", "4.5")
                 ReviewExpandableCard("Exposição MIS", "Exposição", "R$20-25", "4.2")
             }
         }
@@ -145,10 +165,23 @@ fun HighlightCircle(icon: ImageVector, isAdd: Boolean = false) {
         modifier = Modifier
             .size(55.dp)
             .clip(RoundedCornerShape(16.dp))
-            .background(Color(0xFF750D8F)), // Roxo AEON
+            .background(Color(0xFF750D8F)),
         contentAlignment = Alignment.Center
     ) {
         Icon(icon, contentDescription = null, tint = Color.White)
+    }
+}
+
+@Composable
+fun ImageCarousel() {
+    LazyRow {
+        items(5) {
+            Box(
+                modifier = Modifier
+                    .size(100.dp)
+                    .background(Color.Gray)
+            )
+        }
     }
 }
 
@@ -165,7 +198,12 @@ fun ReviewExpandableCard(title: String, type: String, price: String, rating: Str
         colors = CardDefaults.cardColors(containerColor = Color(0xFFEBEBEB)),
         border = BorderStroke(1.dp, Color.Black.copy(alpha = 0.1f))
     ) {
-        Column(modifier = Modifier.padding(16.dp).animateContentSize()) {
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+                .animateContentSize()
+        ) {
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -177,6 +215,7 @@ fun ReviewExpandableCard(title: String, type: String, price: String, rating: Str
                         Text(price, fontSize = 12.sp, color = Color.Gray)
                     }
                 }
+
                 Icon(
                     if (expanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
                     contentDescription = null
@@ -185,17 +224,29 @@ fun ReviewExpandableCard(title: String, type: String, price: String, rating: Str
 
             if (expanded) {
                 Spacer(modifier = Modifier.height(12.dp))
+
+                // CARROSSEL
+                ImageCarousel()
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                // TEXTO REVIEW
                 Text(
-                    "O texto do riveiw, " +
-                            "junto com um mini carrossel de fotos das experiências.",
+                    "Ambiente muito agradável e bem localizado. Ideal para um happy hour tranquilo. Atendimento rápido e experiência excelente.",
                     fontSize = 14.sp
                 )
             }
 
             Spacer(modifier = Modifier.height(8.dp))
+
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(rating, fontWeight = FontWeight.Bold)
-                Icon(Icons.Default.Star, null, tint = Color(0xFFFFD600), modifier = Modifier.size(16.dp))
+                Icon(
+                    Icons.Default.Star,
+                    contentDescription = null,
+                    tint = Color(0xFFFFD600),
+                    modifier = Modifier.size(16.dp)
+                )
                 Text("  2 semanas atrás", fontSize = 12.sp, color = Color.Gray)
             }
         }
