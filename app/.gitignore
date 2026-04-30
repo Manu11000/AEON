@@ -12,3 +12,5 @@ captures/
 *.log
 *.jks
 *.keystore
+.kotlin/
+*.log

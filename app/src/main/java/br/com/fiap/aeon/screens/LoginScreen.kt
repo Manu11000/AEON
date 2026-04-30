@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -103,8 +104,52 @@ fun LoginScreen(navController: NavController) {
             Text(
                 text = "Esqueci minha senha",
                 color = Color.White,
-                fontSize = 14.sp,
+                fontSize = 12.sp,
                 modifier = Modifier.clickable { /* Ação futura */ }
+            )
+
+            Button(
+                onClick = {
+                    navController.navigate("cadastro") {
+                        launchSingleTop = true
+                    }
+                },
+                colors = ButtonDefaults.buttonColors(Color(0xFFFBFF31)),
+                modifier = Modifier.size(width = 200.dp, height = 48.dp)
+            ) {
+                Text(
+                    text = "Cadastrar",
+                    fontSize = 18.sp,
+                    color = Color.Black
+                )
+            }
+
+        }
+
+        Column(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            Text(
+                text = "Desenvolvido por:",
+                fontSize = 12.sp,
+                color = Color.Gray
+            )
+            Text(
+                text = "Manoela Oliveira • Paula Carregal • Pedro Santiago • Vanessa Fittipaldi",
+                fontSize = 12.sp,
+                color = Color.Gray,
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center,
+            )
+
+            Text(
+                text = "2026",
+                fontSize = 12.sp,
+                color = Color.Gray
             )
         }
     }

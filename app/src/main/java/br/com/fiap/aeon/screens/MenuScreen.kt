@@ -42,7 +42,6 @@ fun MenuScreen(navController: NavController) {
     val sharedPref = context.getSharedPreferences("AeonPrefs", Context.MODE_PRIVATE)
     val nomeSalvo = sharedPref.getString("usuario_nome", "Explorador") ?: "Explorador"
 
-    // LISTA DE POSTS DINÂMICOS
     val posts = listOf(
         Post(
             nome = "Blair Willows",
@@ -80,6 +79,7 @@ fun MenuScreen(navController: NavController) {
                 .padding(innerPadding)
         ) {
 
+            // HEADER
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -93,16 +93,18 @@ fun MenuScreen(navController: NavController) {
                 )
             }
 
-            // feed
+            // FEED + RODAPÉ
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
                     .background(Color(0xFFF0FFF5))
             ) {
+
                 items(posts) { post ->
                     AeonPostCard(post = post, navController = navController)
                 }
+
             }
         }
     }
